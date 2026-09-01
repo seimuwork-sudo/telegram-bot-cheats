@@ -11,11 +11,12 @@ from telegram.ext import (
 
 from config import BOT_TOKEN, CHANNELS, CHEATS
 
+import sys
+
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     level=logging.INFO,
-    filename="bot.log",
-    filemode="w",
+    stream=sys.stdout,
 )
 logger = logging.getLogger(__name__)
 
