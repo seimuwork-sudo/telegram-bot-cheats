@@ -188,7 +188,7 @@ async def support(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
     keyboard = [
-        [InlineKeyboardButton("📩 Написать в поддержку", url="https://t.me/seimuzcrack")],
+        [InlineKeyboardButton("📩 Написать в поддержку", url="https://t.me/seimuz")],
         [InlineKeyboardButton("🔙 Назад", callback_data="back_main")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
@@ -197,7 +197,7 @@ async def support(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "🛡 *ПОДДЕРЖКА*\n"
         "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         "📩 _Напиши нам:_\n"
-        "👉 @seimuzcrack\n\n"
+        "👉 @seimuz\n\n"
         "⏰ _Время ответа: до 24ч_",
         reply_markup=reply_markup,
         parse_mode="Markdown",
