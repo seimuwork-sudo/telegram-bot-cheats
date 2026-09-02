@@ -51,6 +51,7 @@ async def download(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     keyboard = [
         [InlineKeyboardButton("🔥 КРЯК WILD CLIENT", callback_data="cheat_wild")],
         [InlineKeyboardButton("⚡ КРЯК WEXSIDE CLIENT", callback_data="cheat_wexside")],
+        [InlineKeyboardButton("💎 СУРСЫ ESENCE CLIENT", callback_data="cheat_essence")],
         [InlineKeyboardButton("🔙 Назад", callback_data="back_main")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
@@ -253,7 +254,8 @@ async def base(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "💎 *НАША БАЗА ЧИТОВ*\n"
         "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         "🔥 *КРЯК WILD CLIENT*\n"
-        "⚡ *КРЯК WEXSIDE CLIENT*\n\n"
+        "⚡ *КРЯК WEXSIDE CLIENT*\n"
+        "💎 *СУРСЫ ESENCE CLIENT*\n\n"
         "_Все читы проверены и безопасны!_",
         reply_markup=reply_markup,
         parse_mode="Markdown",

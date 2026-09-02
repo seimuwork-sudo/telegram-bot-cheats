@@ -22,4 +22,10 @@ CHEATS = {
             "cheats/wexside-client-1.0.0.jar",
         ],
     },
+    "essence": {
+        "name": "СУРСЫ ESENCE CLIENT",
+        "files": [
+            "cheats/3ssenc.zip",
+        ],
+    },
 }
