@@ -72,6 +72,42 @@ async def cheat_selected(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     cheat_key = query.data.replace("cheat_", "")
     user_data[user_id] = {"cheat": cheat_key}
 
+    keyboard = [
+        [InlineKeyboardButton("✅ Принимаю правила", callback_data="accept_rules")],
+        [InlineKeyboardButton("❌ Отказаться", callback_data="back_main")],
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await query.edit_message_text(
+        "━━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"🎮 *{CHEATS[cheat_key]['name']}*\n"
+        "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        "📋 *ПРАВИЛА ИСПОЛЬЗОВАНИЯ:*\n\n"
+        "1️⃣ _Подпишись на все каналы_\n"
+        "2️⃣ _Нажми «Проверить подписку»_\n"
+        "3️⃣ _Получи файл чита_\n\n"
+        "━━━━━━━━━━━━━━━━━━━━━━━\n"
+        "❗ *ДИСКЛЕЙМЕР*\n"
+        "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        "_Мы не являемся авторами кряков и не взламываем читы._\n"
+        "_Мы берём кряки у проверенных сторонних источников._\n"
+        "_Гарантии отсутствия вирусов мы не даём —_ *скачивай на свой страх и риск.*\n"
+        "_Скачивая файлы, ты подтверждаешь, что понимаешь это._\n\n"
+        "Нажми «Принимаю правила» чтобы продолжить 👇",
+        reply_markup=reply_markup,
+        parse_mode="Markdown",
+    )
+
+
+async def accept_rules(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    query = update.callback_query
+    await query.answer()
+
+    user_id = query.from_user.id
+    cheat_key = user_data.get(user_id, {}).get("cheat")
+    if not cheat_key or cheat_key not in CHEATS:
+        await query.edit_message_text("❌ *Ошибка.* Нажми /start заново.", parse_mode="Markdown")
+        return
+
     buttons = []
     for i, ch in enumerate(CHANNELS, 1):
         buttons.append(
@@ -287,6 +323,7 @@ def main() -> None:
     app.add_handler(CallbackQueryHandler(rules, pattern="^rules$"))
     app.add_handler(CallbackQueryHandler(back_main, pattern="^back_main$"))
     app.add_handler(CallbackQueryHandler(cheat_selected, pattern="^cheat_"))
+    app.add_handler(CallbackQueryHandler(accept_rules, pattern="^accept_rules$"))
     app.add_handler(CallbackQueryHandler(check_subscription, pattern="^check_sub$"))
 
     logger.info("Bot started!")
