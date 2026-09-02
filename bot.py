@@ -28,7 +28,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     keyboard = [
         [InlineKeyboardButton("⬇️  Скачать чит", callback_data="download")],
         [InlineKeyboardButton("💎  Наша база читов", callback_data="base")],
-        [InlineKeyboardButton("🛡  Поддержка", callback_data="support")],
         [InlineKeyboardButton("📋  Правила", callback_data="rules")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
@@ -221,26 +220,6 @@ async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE)
     del user_data[user_id]
 
 
-async def support(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    query = update.callback_query
-    await query.answer()
-    keyboard = [
-        [InlineKeyboardButton("📩 Написать в поддержку", url="https://t.me/seimuz")],
-        [InlineKeyboardButton("🔙 Назад", callback_data="back_main")],
-    ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    await query.edit_message_text(
-        "━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "🛡 *ПОДДЕРЖКА*\n"
-        "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-        "📩 _Напиши нам:_\n"
-        "👉 @seimuz\n\n"
-        "⏰ _Время ответа: до 24ч_",
-        reply_markup=reply_markup,
-        parse_mode="Markdown",
-    )
-
-
 async def base(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
@@ -296,7 +275,6 @@ async def back_main(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     keyboard = [
         [InlineKeyboardButton("⬇️  Скачать чит", callback_data="download")],
         [InlineKeyboardButton("💎  Наша база читов", callback_data="base")],
-        [InlineKeyboardButton("🛡  Поддержка", callback_data="support")],
         [InlineKeyboardButton("📋  Правила", callback_data="rules")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
@@ -320,7 +298,6 @@ def main() -> None:
     app.add_error_handler(error_handler)
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CallbackQueryHandler(download, pattern="^download$"))
-    app.add_handler(CallbackQueryHandler(support, pattern="^support$"))
     app.add_handler(CallbackQueryHandler(base, pattern="^base$"))
     app.add_handler(CallbackQueryHandler(rules, pattern="^rules$"))
     app.add_handler(CallbackQueryHandler(back_main, pattern="^back_main$"))
