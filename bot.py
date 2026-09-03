@@ -1,3 +1,4 @@
+import json
 import logging
 from pathlib import Path
 
@@ -7,11 +8,16 @@ from telegram.ext import (
     CallbackQueryHandler,
     CommandHandler,
     ContextTypes,
+    MessageHandler,
+    filters,
 )
 
 from config import BOT_TOKEN, CHANNELS, CHEATS
 
 import sys
+
+ADMIN_ID = 6367594269
+USERS_FILE = Path("users.json")
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -21,10 +27,24 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 user_data: dict[int, dict] = {}
+broadcast_state: dict[int, bool] = {}
+
+
+def load_users() -> set[int]:
+    if USERS_FILE.exists():
+        return set(json.loads(USERS_FILE.read_text(encoding="utf-8")))
+    return set()
+
+
+def save_user(user_id: int) -> None:
+    users = load_users()
+    users.add(user_id)
+    USERS_FILE.write_text(json.dumps(list(users)), encoding="utf-8")
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = update.effective_user
+    save_user(user.id)
     keyboard = [
         [InlineKeyboardButton("⬇️  Скачать чит", callback_data="download")],
         [InlineKeyboardButton("💎  Наша база читов", callback_data="base")],
@@ -290,6 +310,54 @@ async def back_main(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     )
 
 
+async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if update.effective_user.id != ADMIN_ID:
+        await update.message.reply_text("❌ У тебя нет доступа к этой команде.")
+        return
+
+    broadcast_state[ADMIN_ID] = True
+    await update.message.reply_text(
+        "📢 *РЕЖИМ РАССЫЛКИ*\n\n"
+        "Отправь мне сообщение, которое хочешь разослать всем пользователям.\n"
+        "Для отмены напиши /cancel",
+        parse_mode="Markdown",
+    )
+
+
+async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if update.effective_user.id == ADMIN_ID and broadcast_state.get(ADMIN_ID):
+        broadcast_state[ADMIN_ID] = False
+        await update.message.reply_text("❌ Рассылка отменена.")
+        return
+
+
+async def handle_broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if update.effective_user.id != ADMIN_ID or not broadcast_state.get(ADMIN_ID):
+        return
+
+    broadcast_state[ADMIN_ID] = False
+    users = load_users()
+    sent = 0
+    failed = 0
+
+    for user_id in users:
+        try:
+            await context.bot.send_message(
+                chat_id=user_id,
+                text=update.message.text,
+                parse_mode="Markdown",
+            )
+            sent += 1
+        except Exception:
+            failed += 1
+
+    await update.message.reply_text(
+        f"✅ Рассылка завершена!\n"
+        f"📨 Отправлено: {sent}\n"
+        f"❌ Ошибок: {failed}",
+    )
+
+
 async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
     logger.error("Exception while handling an update:", exc_info=context.exception)
 
@@ -299,6 +367,9 @@ def main() -> None:
 
     app.add_error_handler(error_handler)
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("broadcast", broadcast))
+    app.add_handler(CommandHandler("cancel", cancel))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND & filters.ChatType.PRIVATE, handle_broadcast))
     app.add_handler(CallbackQueryHandler(download, pattern="^download$"))
     app.add_handler(CallbackQueryHandler(base, pattern="^base$"))
     app.add_handler(CallbackQueryHandler(rules, pattern="^rules$"))
