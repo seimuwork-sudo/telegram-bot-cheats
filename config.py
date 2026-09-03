@@ -34,4 +34,10 @@ CHEATS = {
             "cheats/rockstar-client-src.rar",
         ],
     },
+    "zenith": {
+        "name": "КРЯК ZENITH CLIENT",
+        "files": [
+            "cheats/zenith-1.0-SNAPSHOT.jar",
+        ],
+    },
 }
