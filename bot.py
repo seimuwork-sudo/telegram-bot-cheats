@@ -1,5 +1,7 @@
 import json
 import logging
+import os
+import subprocess
 from pathlib import Path
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
@@ -40,6 +42,16 @@ def save_user(user_id: int) -> None:
     users = load_users()
     users.add(user_id)
     USERS_FILE.write_text(json.dumps(list(users)), encoding="utf-8")
+    try:
+        token = os.environ.get("GITHUB_TOKEN", "")
+        subprocess.run(["git", "config", "user.name", "seimjuzsliv"], capture_output=True, timeout=10)
+        subprocess.run(["git", "config", "user.email", "bot@seimjuzsliv.bot"], capture_output=True, timeout=10)
+        subprocess.run(["git", "remote", "set-url", "origin", f"https://{token}@github.com/seimuwork-sudo/telegram-bot-cheats.git"], capture_output=True, timeout=10)
+        subprocess.run(["git", "add", "users.json"], capture_output=True, timeout=10)
+        subprocess.run(["git", "commit", "-m", f"Update users ({len(users)} total)"], capture_output=True, timeout=10)
+        subprocess.run(["git", "push"], capture_output=True, timeout=30)
+    except Exception as e:
+        logger.error("Failed to push users.json: %s", e)
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
