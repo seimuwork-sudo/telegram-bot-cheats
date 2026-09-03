@@ -66,6 +66,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def download(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
+    save_user(query.from_user.id)
 
     keyboard = [
         [InlineKeyboardButton("🔥 КРЯК WILD CLIENT", callback_data="cheat_wild")],
@@ -88,6 +89,7 @@ async def download(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def cheat_selected(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
+    save_user(query.from_user.id)
 
     user_id = query.from_user.id
     cheat_key = query.data.replace("cheat_", "")
@@ -122,6 +124,7 @@ async def cheat_selected(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 async def accept_rules(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
+    save_user(query.from_user.id)
 
     user_id = query.from_user.id
     cheat_key = user_data.get(user_id, {}).get("cheat")
@@ -156,6 +159,7 @@ async def accept_rules(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
+    save_user(query.from_user.id)
 
     user_id = query.from_user.id
     not_subscribed = []
@@ -244,6 +248,7 @@ async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE)
 async def base(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
+    save_user(query.from_user.id)
     keyboard = [
         [InlineKeyboardButton("⬇️ Скачать", callback_data="download")],
         [InlineKeyboardButton("🔙 Назад", callback_data="back_main")],
@@ -266,6 +271,7 @@ async def base(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def rules(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
+    save_user(query.from_user.id)
     keyboard = [
         [InlineKeyboardButton("🔙 Назад", callback_data="back_main")],
     ]
@@ -293,6 +299,7 @@ async def rules(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def back_main(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
+    save_user(query.from_user.id)
 
     keyboard = [
         [InlineKeyboardButton("⬇️  Скачать чит", callback_data="download")],
