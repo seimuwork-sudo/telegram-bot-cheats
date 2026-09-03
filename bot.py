@@ -398,6 +398,10 @@ def main() -> None:
     app.add_handler(CallbackQueryHandler(check_subscription, pattern="^check_sub$"))
 
     logger.info("Bot started!")
+    try:
+        subprocess.run(["git", "pull"], capture_output=True, timeout=30)
+    except Exception:
+        pass
     app.run_polling(drop_pending_updates=True)
 
 
