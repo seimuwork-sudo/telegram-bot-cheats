@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import subprocess
+import zipfile
 from pathlib import Path
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
@@ -269,19 +270,32 @@ async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
     for file_path in cheat["files"]:
         path = Path(file_path)
-        if path.exists():
-            with open(path, "rb") as f:
-                await context.bot.send_document(
-                    chat_id=user_id,
-                    document=f,
-                    filename=path.name,
-                )
-        else:
+        if not path.exists():
             await context.bot.send_message(
                 chat_id=user_id,
                 text=f"❌ Файл `{path.name}` не найден.",
                 parse_mode="Markdown",
             )
+            continue
+
+        file_size_mb = path.stat().st_size / (1024 * 1024)
+        send_path = path
+
+        if file_size_mb > 49:
+            zip_path = path.with_suffix(".zip")
+            with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
+                zf.write(path, path.name)
+            send_path = zip_path
+
+        with open(send_path, "rb") as f:
+            await context.bot.send_document(
+                chat_id=user_id,
+                document=f,
+                filename=send_path.name,
+            )
+
+        if send_path != path:
+            send_path.unlink(missing_ok=True)
 
     await context.bot.send_message(
         chat_id=user_id,
