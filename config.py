@@ -28,4 +28,10 @@ CHEATS = {
             "cheats/3ssenc.zip",
         ],
     },
+    "rockstar": {
+        "name": "СУРСЫ ROCKSTAR CLIENT",
+        "files": [
+            "cheats/rockstar-client-src.rar",
+        ],
+    },
 }
