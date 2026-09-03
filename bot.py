@@ -15,7 +15,7 @@ from telegram.ext import (
     filters,
 )
 
-from config import BOT_TOKEN, CHANNELS, CHEATS
+from config import BOT_TOKEN, CHANNELS, CHEATS, DOWNLOAD_LINKS
 
 import sys
 
@@ -279,15 +279,27 @@ async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
         file_size_mb = path.stat().st_size / (1024 * 1024)
         if file_size_mb > 50:
-            await context.bot.send_message(
-                chat_id=user_id,
-                text=(
-                    f"⚠️ Файл `{path.name}` ({file_size_mb:.0f} MB) "
-                    f"превышает лимит Telegram (50 MB).\n"
-                    f"Обратитесь к администратору за ссылкой."
-                ),
-                parse_mode="Markdown",
-            )
+            link = DOWNLOAD_LINKS.get(path.name)
+            if link:
+                await context.bot.send_message(
+                    chat_id=user_id,
+                    text=(
+                        f"⚠️ Файл `{path.name}` ({file_size_mb:.0f} MB) "
+                        f"превышает лимит Telegram.\n\n"
+                        f"🔗 Скачать по ссылке:\n{link}"
+                    ),
+                    parse_mode="Markdown",
+                )
+            else:
+                await context.bot.send_message(
+                    chat_id=user_id,
+                    text=(
+                        f"⚠️ Файл `{path.name}` ({file_size_mb:.0f} MB) "
+                        f"превышает лимит Telegram (50 MB).\n"
+                        f"Обратитесь к администратору за ссылкой."
+                    ),
+                    parse_mode="Markdown",
+                )
             continue
 
         with open(path, "rb") as f:

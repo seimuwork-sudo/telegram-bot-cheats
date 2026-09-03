@@ -41,3 +41,7 @@ CHEATS = {
         ],
     },
 }
+
+DOWNLOAD_LINKS = {
+    "zenith-1.0-SNAPSHOT.jar": "https://workupload.com/file/k7FwUq5LHpv",
+}
