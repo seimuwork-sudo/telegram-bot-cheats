@@ -1,6 +1,6 @@
 import os
 
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "8757096551:AAH8AU5FxY2-Zr1AgMek9_nM8fevB45gWJk")
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
 
 CHANNELS = [
     {"chat_id": -1003265919438, "username": "seimuzcrack", "label": "СЕЙМУЗ КРЯК"},

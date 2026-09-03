@@ -19,7 +19,7 @@ from config import BOT_TOKEN, CHANNELS, CHEATS
 
 import sys
 
-ADMIN_ID = 6367594269
+ADMIN_ID = int(os.environ.get("ADMIN_ID", "6367594269"))
 USERS_FILE = Path("users.json")
 CUSTOM_CHEATS_FILE = Path("custom_cheats.json")
 CHEATS_DIR = Path("cheats")
