@@ -2,7 +2,6 @@ import json
 import logging
 import os
 import subprocess
-import zipfile
 from pathlib import Path
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
@@ -279,23 +278,24 @@ async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE)
             continue
 
         file_size_mb = path.stat().st_size / (1024 * 1024)
-        send_path = path
+        if file_size_mb > 50:
+            await context.bot.send_message(
+                chat_id=user_id,
+                text=(
+                    f"⚠️ Файл `{path.name}` ({file_size_mb:.0f} MB) "
+                    f"превышает лимит Telegram (50 MB).\n"
+                    f"Обратитесь к администратору за ссылкой."
+                ),
+                parse_mode="Markdown",
+            )
+            continue
 
-        if file_size_mb > 49:
-            zip_path = path.with_suffix(".zip")
-            with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
-                zf.write(path, path.name)
-            send_path = zip_path
-
-        with open(send_path, "rb") as f:
+        with open(path, "rb") as f:
             await context.bot.send_document(
                 chat_id=user_id,
                 document=f,
-                filename=send_path.name,
+                filename=path.name,
             )
-
-        if send_path != path:
-            send_path.unlink(missing_ok=True)
 
     await context.bot.send_message(
         chat_id=user_id,
