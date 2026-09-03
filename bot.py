@@ -506,7 +506,7 @@ async def upload_cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
 
 
 async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
-    logger.error("Exception while handling an update:", exc_info=context.exception)
+    logger.error("Exception while handling an update:", exc_info=context.error)
 
 
 def main() -> None:
