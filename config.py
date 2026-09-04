@@ -45,6 +45,12 @@ CHEATS = {
         "files": [],
         "download_link": "https://workupload.com/file/kEGPNyeYkfn",
     },
+    "systemdlc": {
+        "name": "КРЯК SYSTEM DLC",
+        "files": [
+            "cheats/systemdlc.jar",
+        ],
+    },
 }
 
 DOWNLOAD_LINKS = {
