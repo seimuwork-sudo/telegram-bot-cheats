@@ -40,6 +40,11 @@ CHEATS = {
             "cheats/zenith-1.0-SNAPSHOT.jar",
         ],
     },
+    "xrose": {
+        "name": "КРЯК XROSE CLIENT 26.2",
+        "files": [],
+        "download_link": "https://workupload.com/file/kEGPNyeYkfn",
+    },
 }
 
 DOWNLOAD_LINKS = {

@@ -267,7 +267,7 @@ async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE)
         parse_mode="Markdown",
     )
 
-    for file_path in cheat["files"]:
+    for file_path in cheat.get("files", []):
         path = Path(file_path)
         if not path.exists():
             await context.bot.send_message(
@@ -308,6 +308,16 @@ async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE)
                 document=f,
                 filename=path.name,
             )
+
+    if cheat.get("download_link"):
+        await context.bot.send_message(
+            chat_id=user_id,
+            text=(
+                "🔗 *Скачать файл:*\n"
+                f"{cheat['download_link']}"
+            ),
+            parse_mode="Markdown",
+        )
 
     await context.bot.send_message(
         chat_id=user_id,
