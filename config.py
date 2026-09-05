@@ -51,6 +51,12 @@ CHEATS = {
             "cheats/systemdlc.jar",
         ],
     },
+    "fandomdlc": {
+        "name": "КРЯК FANDOM DLC",
+        "files": [
+            "cheats/CodeAntiLeak - MOGGED.rar",
+        ],
+    },
 }
 
 DOWNLOAD_LINKS = {
