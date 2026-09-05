@@ -57,6 +57,11 @@ CHEATS = {
             "cheats/CodeAntiLeak - MOGGED.rar",
         ],
     },
+    "nursultan": {
+        "name": "КРЯК NURSULTAN CLIENT",
+        "files": [],
+        "download_link": "https://workupload.com/file/MVDemNZPvC6",
+    },
 }
 
 DOWNLOAD_LINKS = {
