@@ -6,6 +6,7 @@ CHANNELS = [
     {"chat_id": -1003265919438, "username": "seimuzcrack", "label": "СЕЙМУЗ КРЯК"},
     {"chat_id": -1003436435497, "username": "nebulaclientt", "label": "NEBULA CLIENT"},
     {"chat_id": -1003731864428, "username": "seimuz_mine", "label": "СЕЙМУЗ ЖИЗНЬ"},
+    {"chat_id": 0, "username": "LunarDevBLOG", "label": "NEBULA DEVLOG"},
 ]
 
 CHEATS = {

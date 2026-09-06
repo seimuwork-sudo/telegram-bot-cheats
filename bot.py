@@ -588,6 +588,21 @@ def main() -> None:
         subprocess.run(["git", "pull"], capture_output=True, timeout=30)
     except Exception:
         pass
+
+    for ch in CHANNELS:
+        if ch["chat_id"] == 0:
+            try:
+                import httpx
+                r = httpx.get(f"https://api.telegram.org/bot{BOT_TOKEN}/getChat?chat_id=@{ch['username']}", timeout=10)
+                data = r.json()
+                if data.get("ok"):
+                    ch["chat_id"] = data["result"]["id"]
+                    logger.info("Resolved @%s -> %s", ch["username"], ch["chat_id"])
+                else:
+                    logger.error("Cannot resolve @%s: %s", ch["username"], data.get("description"))
+            except Exception as e:
+                logger.error("Error resolving @%s: %s", ch["username"], e)
+
     app.run_polling(drop_pending_updates=True)
 
 
