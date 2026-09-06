@@ -89,15 +89,15 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = update.effective_user
     save_user(user.id)
     keyboard = [
-        [InlineKeyboardButton("🦆 Скачать чит", callback_data="download")],
-        [InlineKeyboardButton("🦆 Наша база читов", callback_data="base")],
-        [InlineKeyboardButton("🦆 Правила", callback_data="rules")],
+        [InlineKeyboardButton("🐥 Скачать чит", callback_data="download")],
+        [InlineKeyboardButton("🐥 Наша база читов", callback_data="base")],
+        [InlineKeyboardButton("🐥 Правила", callback_data="rules")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text(
-        f"🦆 Привет, _{user.first_name}!_\n\n"
+        f"🐥 Привет, _{user.first_name}!_\n\n"
         "━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "🦆 *УткаБот — выдача читов*\n"
+        "🐥 *УткаБот — выдача читов*\n"
         "_Быстро · Безопасно · Надёжно_\n"
         "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         "Выбери действие 👇",
@@ -113,7 +113,7 @@ async def download(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     all_cheats = get_all_cheats()
     keyboard = []
-    emojis = ["🦆", "🦆", "🦆", "🦆", "🦆", "🦆", "🦆", "🦆"]
+    emojis = ["🐥", "🐥", "🐥", "🐥", "🐥", "🐥", "🐥", "🐥"]
     for i, (key, cheat) in enumerate(all_cheats.items()):
         emoji = emojis[i % len(emojis)]
         keyboard.append([InlineKeyboardButton(f"{emoji} {cheat['name']}", callback_data=f"cheat_{key}")])
@@ -122,7 +122,7 @@ async def download(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
         "━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "🦆 *ВЫБЕРИ ЧИТ*\n"
+        "🐥 *ВЫБЕРИ ЧИТ*\n"
         "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         "Нажми на нужный чит 👇",
         reply_markup=reply_markup,
@@ -146,13 +146,13 @@ async def cheat_selected(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     user_data[user_id] = {"cheat": cheat_key}
 
     keyboard = [
-        [InlineKeyboardButton("🦆 Принимаю правила", callback_data="accept_rules")],
+        [InlineKeyboardButton("🐥 Принимаю правила", callback_data="accept_rules")],
         [InlineKeyboardButton("❌ Отказаться", callback_data="back_main")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
         "━━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"🦆 *{all_cheats[cheat_key]['name']}*\n"
+        f"🐥 *{all_cheats[cheat_key]['name']}*\n"
         "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         "📋 *ПРАВИЛА ИСПОЛЬЗОВАНИЯ:*\n\n"
         "1️⃣ _Подпишись на все каналы_\n"
@@ -192,13 +192,13 @@ async def accept_rules(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
                 url=f"https://t.me/{ch['username']}",
             )]
         )
-    buttons.append([InlineKeyboardButton("🦆 ПРОВЕРИТЬ ПОДПИСКУ", callback_data="check_sub")])
+    buttons.append([InlineKeyboardButton("🐥 ПРОВЕРИТЬ ПОДПИСКУ", callback_data="check_sub")])
     buttons.append([InlineKeyboardButton("🔙 Назад", callback_data="back_main")])
 
     reply_markup = InlineKeyboardMarkup(buttons)
     await query.edit_message_text(
         f"━━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"🦆 *{all_cheats[cheat_key]['name']}*\n"
+        f"🐥 *{all_cheats[cheat_key]['name']}*\n"
         "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         "📢 _Чтобы скачать чит, подпишись на все каналы:_\n\n"
         "Нажми на канал → *Подписаться* → Вернись сюда\n\n"
@@ -240,7 +240,7 @@ async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE)
                     url=f"https://t.me/{ch['username']}",
                 )]
             )
-        keyboard.append([InlineKeyboardButton("🦆 ПРОВЕРИТЬ ЕЩЁ РАЗ", callback_data="check_sub")])
+        keyboard.append([InlineKeyboardButton("🐥 ПРОВЕРИТЬ ЕЩЁ РАЗ", callback_data="check_sub")])
         reply_markup = InlineKeyboardMarkup(keyboard)
         await query.edit_message_text(
             "━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -261,7 +261,7 @@ async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE)
     cheat = all_cheats[cheat_key]
     await query.edit_message_text(
         "━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "🦆 *ВСЕ ПОДПИСКИ ПРОВЕРЕНЫ!*\n"
+        "🐥 *ВСЕ ПОДПИСКИ ПРОВЕРЕНЫ!*\n"
         "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         "📦 _Отправляю файлы..._",
         parse_mode="Markdown",
@@ -323,7 +323,7 @@ async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE)
         chat_id=user_id,
         text=(
             "━━━━━━━━━━━━━━━━━━━━━━━\n"
-            "🦆 *ФАЙЛЫ ОТПРАВЛЕНЫ!*\n"
+            "🐥 *ФАЙЛЫ ОТПРАВЛЕНЫ!*\n"
             "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
             "_Удачи в игре!_\n"
             "_Нужна помощь →_ /start"
@@ -341,12 +341,12 @@ async def base(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     all_cheats = get_all_cheats()
     keyboard = [
-        [InlineKeyboardButton("🦆 Скачать", callback_data="download")],
+        [InlineKeyboardButton("🐥 Скачать", callback_data="download")],
         [InlineKeyboardButton("🔙 Назад", callback_data="back_main")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    emojis = ["🦆", "🦆", "🦆", "🦆", "🦆", "🦆", "🦆", "🦆"]
+    emojis = ["🐥", "🐥", "🐥", "🐥", "🐥", "🐥", "🐥", "🐥"]
     cheats_text = ""
     for i, (key, cheat) in enumerate(all_cheats.items()):
         emoji = emojis[i % len(emojis)]
@@ -354,7 +354,7 @@ async def base(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     await query.edit_message_text(
         "━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "🦆 *НАША БАЗА ЧИТОВ*\n"
+        "🐥 *НАША БАЗА ЧИТОВ*\n"
         "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         f"{cheats_text}\n"
         "_Все читы проверены!_",
@@ -373,7 +373,7 @@ async def rules(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
         "━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "🦆 *ПРАВИЛА*\n"
+        "🐥 *ПРАВИЛА*\n"
         "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         "1️⃣ _Подпишись на все каналы_\n"
         "2️⃣ _Нажми «Проверить подписку»_\n"
@@ -397,14 +397,14 @@ async def back_main(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     save_user(query.from_user.id)
 
     keyboard = [
-        [InlineKeyboardButton("🦆 Скачать чит", callback_data="download")],
-        [InlineKeyboardButton("🦆 Наша база читов", callback_data="base")],
-        [InlineKeyboardButton("🦆 Правила", callback_data="rules")],
+        [InlineKeyboardButton("🐥 Скачать чит", callback_data="download")],
+        [InlineKeyboardButton("🐥 Наша база читов", callback_data="base")],
+        [InlineKeyboardButton("🐥 Правила", callback_data="rules")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
         "━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "🦆 *ГЛАВНОЕ МЕНЮ*\n"
+        "🐥 *ГЛАВНОЕ МЕНЮ*\n"
         "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         "Выбери действие 👇",
         reply_markup=reply_markup,
@@ -524,7 +524,7 @@ async def upload_file(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
 
     await update.message.reply_text(
         "━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "🦆 *ЧИТ ЗАГРУЖЕН!*\n"
+        "🐥 *ЧИТ ЗАГРУЖЕН!*\n"
         "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         f"📦 *Название:* {cheat_name}\n"
         f"📄 *Файл:* `{filename}`\n\n"
@@ -550,7 +550,7 @@ async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         return
     users = load_users()
     await update.message.reply_text(
-        f"🦆 *Статистика бота*\n\n"
+        f"🐥 *Статистика бота*\n\n"
         f"👥 Всего юзеров: *{len(users)}*",
         parse_mode="Markdown",
     )
