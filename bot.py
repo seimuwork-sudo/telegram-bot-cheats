@@ -97,7 +97,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
         f"🐥 Привет, _{user.first_name}!_\n\n"
         "━━━━━━━━━━━━━━━━━━━━━━━\n"
-        "🐥 *УткаБот — выдача читов*\n"
+        "🐥 *Сеймуз Кряк — выдача читов*\n"
         "_Быстро · Безопасно · Надёжно_\n"
         "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         "Выбери действие 👇",
