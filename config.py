@@ -63,6 +63,11 @@ CHEATS = {
         "files": [],
         "download_link": "https://workupload.com/file/MVDemNZPvC6",
     },
+    "velka": {
+        "name": "КРЯК VELKA DLC",
+        "files": [],
+        "download_link": "https://workupload.com/file/XjASaf3G7jt",
+    },
 }
 
 DOWNLOAD_LINKS = {
