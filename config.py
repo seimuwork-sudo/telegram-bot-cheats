@@ -68,6 +68,11 @@ CHEATS = {
         "files": [],
         "download_link": "https://workupload.com/file/XjASaf3G7jt",
     },
+    "healthdlc": {
+        "name": "СУРСЫ HEALTH DLC",
+        "files": [],
+        "download_link": "https://workupload.com/file/JXb3mm4pKGu",
+    },
 }
 
 DOWNLOAD_LINKS = {
